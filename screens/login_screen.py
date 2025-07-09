@@ -14,6 +14,15 @@ class LoginScreen(BaseScreen):
     _login_button = (AppiumBy.ACCESSIBILITY_ID, "Login button")
     _error_message_container = (AppiumBy.XPATH, "//android.view.ViewGroup[@content-desc='generic-error-message']/android.widget.TextView")
 
+    # --- NEW: Property to list all key elements for accessibility checks ---
+    @property
+    def key_elements(self):
+        """Returns a list of locators for key interactive elements on the screen."""
+        return [
+            self._username_input,
+            self._password_input,
+            self._login_button,
+        ]
 
     def enter_username(self, username):
         """Waits for the username input field and types the given username."""
@@ -33,6 +42,5 @@ class LoginScreen(BaseScreen):
     def is_error_message_displayed(self):
         """Verifies if the generic error message is visible using a quick check."""
         print("Checking for login error message...")
-        # Use the new, fast checking method from BaseScreen
         return self.is_element_displayed(self._error_message_container)
 
