@@ -6,23 +6,18 @@ from .base_screen import BaseScreen
 class CheckoutScreen(BaseScreen):
     """
     This class represents the Checkout / Shipping Address screen.
-    It now includes methods for reading form validation errors.
     """
 
     # --- Locators ---
     _screen_title = (AppiumBy.XPATH, "//android.widget.TextView[@text='Enter a shipping address']")
     _menu_button = (AppiumBy.ACCESSIBILITY_ID, "open menu")
     _catalog_menu_item = (AppiumBy.ACCESSIBILITY_ID, "menu item catalog")
-
-    # --- Locators for shipping form ---
     _full_name_input = (AppiumBy.ACCESSIBILITY_ID, "Full Name* input field")
     _address_line_1_input = (AppiumBy.ACCESSIBILITY_ID, "Address Line 1* input field")
     _city_input = (AppiumBy.ACCESSIBILITY_ID, "City* input field")
     _zip_code_input = (AppiumBy.ACCESSIBILITY_ID, "Zip Code* input field")
     _country_input = (AppiumBy.ACCESSIBILITY_ID, "Country* input field")
     _to_payment_button = (AppiumBy.ACCESSIBILITY_ID, "To Payment button")
-
-    # --- NEW: Locators for error messages ---
     _full_name_error_text = (AppiumBy.XPATH, "//android.view.ViewGroup[@content-desc='Full Name*-error-message']/android.widget.TextView")
     _address_line_1_error_text = (AppiumBy.XPATH, "//android.view.ViewGroup[@content-desc='Address Line 1*-error-message']/android.widget.TextView")
 
@@ -70,5 +65,15 @@ class CheckoutScreen(BaseScreen):
             return element.text
         except:
             print("Could not find the address error message.")
+            return None
+            
+    def get_full_name_text(self):
+        """Gets the current text from the full name input field."""
+        print("Getting text from full name input")
+        try:
+            element = self._wait_for_element(self._full_name_input, 5)
+            return element.text
+        except:
+            print("Could not find the full name input field.")
             return None
 
